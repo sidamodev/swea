@@ -3,7 +3,6 @@ import pprint
 
 sys.stdin = open("2806.txt", "r")
 
-
 # 1 1
 # 2 0
 # 3 0
@@ -14,6 +13,8 @@ sys.stdin = open("2806.txt", "r")
 # 8 92
 # 9 352
 # 10 724
+
+# backtracking -> 1차원 배열을 생성함
 
 def zero_fill():
     for i in range(N):
