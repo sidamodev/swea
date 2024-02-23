@@ -15,8 +15,13 @@
 #     def is_full(self):
 #
 #     def size(self):
-with open('test.txt', 'r') as test:
+# def cipher(origin_num):
+#     return origin_num ^ 1004
+#
+# encoded = cipher(4)
+# print(encoded)
+# print(cipher(encoded))
+# 100000
+# 011111
 
-with open ('test.txt', 'w') as file:
-    file.write(test)
-file.close()
+print(str(1)+str(2))
