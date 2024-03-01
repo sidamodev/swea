@@ -1,28 +1,25 @@
-# # 원형 덱
-# class deque:
-#     def __init__(self):
-#         self.dq = []
-#
-#     def append(self, item):
-#
-#     def appendleft(self, item):
-#     def pop(self):
-#     def popleft(self):
-#     def get(self):
-#     def get_front(self):
-#     def is_empty(self):
-#
-#     def is_full(self):
-#
-#     def size(self):
-# def cipher(origin_num):
-#     return origin_num ^ 1004
-#
-# encoded = cipher(4)
-# print(encoded)
-# print(cipher(encoded))
-# 100000
-# 011111
+T = int(input())
+import pprint
 
-a = '0000000068B46DDB9346F40000'
-print(bin(int(a, 16)))
+
+def dfs(i, score):
+
+    global max_v
+    if i == N:
+        if score > max_v:
+            max_v = score
+    for j in range(N):
+        if not visited[j] and board[i][j] >= 0:
+            visited[j] = True
+            dfs(i + 1, score + board[i][j])
+
+
+for t_c in range(1, T + 1):
+    N = int(input())
+    visited = [False] * N
+    max_v = 0
+    board = [list(map(int, input().split())) for _ in range(N)]
+    for p in range(N):
+        dfs(p, 0)
+    print(max_v)
+    print()

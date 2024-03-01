@@ -17,25 +17,22 @@ code_table = {
 
 
 def find_back(start):
-    for back_idx in range(start, 2, -1):
+    for back_idx in range(start, 53, -1):
         if bin_code[back_idx] == "1":
             return back_idx
     else:
         return -1
 
 
-# main loop
 for t_c in range(1, T + 1):
     N, M = map(int, input().split())
-    enc_code = [input().strip() for _ in range(N)]
-    res_set = set()
-    enc_set = set(enc_code)
-    # M 길이의 0을 제거
+    enc_set = set([input().strip() for _ in range(N)])
     enc_set.remove("0" * M)
+    res_set = set()
     not_found = False
     for item in enc_set:
         mul = 1
-        bin_code = bin(int(item, 16))
+        bin_code = bin(int(item, 16)).rstrip()
         back = find_back(len(bin_code) - 1)
         while back >= 54:
             dec_l = []
@@ -62,12 +59,11 @@ for t_c in range(1, T + 1):
                 mul += 1
                 not_found = False
                 continue
-            dec_l.reverse()
-            odd = dec_l[0] + dec_l[2] + dec_l[4] + dec_l[6]
-            even = dec_l[1] + dec_l[3] + dec_l[5]
-            if not (odd * 3 + even + dec_l[7]) % 10:
-                res_set.add("".join(map(str, dec_l)))
+            odd = dec_l[1] + dec_l[3] + dec_l[5] + dec_l[7]
+            even = dec_l[2] + dec_l[4] + dec_l[6]
+            if not (odd * 3 + even + dec_l[0]) % 10:
+                res_set.add(tuple(dec_l))
             back -= 56 * mul - 1
             mul = 1
             back = find_back(back)
-    print(f"#{t_c} {sum(map(lambda x: sum(map(int, x)), res_set))}")
+    print(f"#{t_c} {sum(map(lambda x: sum(x), res_set))}")
