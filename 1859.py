@@ -2,19 +2,14 @@ T = int(input())
 
 for test_case in range(1, T + 1):
     N = int(input())
-    price = list(map(int, input().split()))
-    result = i = 0
+    val = list(map(int, input().split()))
+    i = sum_v = 0
     while i < N:
-        j = i
-        for k in range(i, N):
-            if price[k] >= cur_max:
-                cur_max = price[k]
-                j = k
-        sum_acc = cnt = 0
-        for p in range(i, j):
-            sum_acc += price[p]
-            cnt += 1
-        result += cur_max * cnt - sum_acc
-        i = j + 1
-
-    print(result)
+        max_i = i
+        for j in range(i, N):
+            if val[j] > val[max_i]:
+                max_i = j
+        for k in range(i, max_i):
+            sum_v += val[max_i] - val[k]
+        i = max_i + 1
+    print(f'#{test_case} {sum_v}')
