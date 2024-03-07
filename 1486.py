@@ -4,27 +4,28 @@ sys.stdin = open('1486.txt', 'r')
 T = int(input())
 
 
-def dfs(i, j):
+def dfs(i, sum_v):
     global min_v
-    tmp_sum = sum(path)
-    if tmp_sum >= min_v:
+    if min_v <= B:
         return
-    if tmp_sum >= B:
-        if tmp_sum < min_v:
-            min_v = tmp_sum
+    if sum_v >= min_v:
         return
-    if i == N:
+    if sum_v >= B:
+        min_v = sum_v
         return
-    for k in range(j, N):
-        path.append(S[k])
-        dfs(i + 1, k + 1)
-        path.pop()
+
+
+    for k in range(i, N):
+        if not v[k]:
+            v[k] = 1
+            dfs(k + 1, sum_v + S[k])
+            v[k] = 0
 
 
 for t_c in range(1, T + 1):
     N, B = map(int, input().split())
     S = list(map(int, input().split()))
+    v = [0] * N
     min_v = 0xfffff
-    path = []
     dfs(0, 0)
-    print(f'#{t_c} {min_v-B}')
+    print(f'#{t_c} {min_v - B}')
