@@ -1,53 +1,42 @@
-lst = '1 2 1 3 2 4 3 5 3 6 4 7 5 8 5 9 6 10 6 11 7 12 11 13'
-arr = list(map(int, lst.split()))
+from collections import deque
+
+graph = [
+    [1, 3],
+    [0, 2, 4],
+    [1],
+    [0, 4],
+    [1, 3]
+]
+
+visited = [0] * len(graph)
+path = []
 
 
-class TreeNode:
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
-
-    def insert(self, child):
-        if not self.left:
-            self.left = child
-            return
-
-        if not self.right:
-            self.right = child
-            return
-        return
-
-    def inorder(self):
-        # self가 0인 경우도 고려..
-        if self is not None:
-            if self.left:
-                self.left.inorder()
-            print(self.value, end=' ')
-            if self.right:
-                self.right.inorder()
-
-    def preorder(self):
-        if self is not None:
-            print(self.value, end=' ')
-            if self.left:
-                self.left.preorder()
-            if self.right:
-                self.right.preorder()
-
-    def postorder(self):
-        if self is not None:
-            if self.left:
-                self.left.postorder()
-            if self.right:
-                self.right.postorder()
-            print(self.value, end=' ')
+# def dfs(node):
+#     for neighbor in graph[node]:
+#         if visited[neighbor]:
+#             continue
+#
+#         visited[neighbor] = 1
+#         path.append(neighbor)
+#         dfs(neighbor)
 
 
-nodes = [TreeNode(i) for i in range(14)]
+def bfs(node):
+    queue = deque()
+    queue.append(node)
+    visited[node] = 1
+    while queue:
+        node = queue.popleft()
+        print(node, end=' ')
+        for neighbor in graph[node]:
+            if visited[neighbor]:
+                continue
+            visited[neighbor] = 1
+            print(visited)
+            queue.append(neighbor)
 
-for i in range(0, len(arr), 2):
-    p, c = arr[i], arr[i + 1]
-    nodes[p].insert(nodes[c])
 
-nodes[1].postorder()
+visited[0] = 1
+# path.append(0)
+bfs(0)
