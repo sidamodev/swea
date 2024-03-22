@@ -2,10 +2,32 @@ import sys
 
 sys.stdin = open('5251.txt', 'r')
 
+from heapq import heappush, heappop
+
+INF = int(1e9)
+
+
+def dijkstra(start):
+    dist = A[start][:]
+    chk = {start}
+    while len(chk) < N:
+        min_i, min_v = 0, INF
+        for i, v in enumerate(dist):
+            if i not in chk and v < min_v:
+                min_i, min_v = i, v
+        chk.add(min_i)
+        for i in range(N + 1):
+            w_acc = A[min_i][i] + min_v
+            if i not in chk and w_acc < dist[i]:
+                dist[i] = w_acc
+                chk.add(min_i)
+    return dist[N]
+
+
 for t_c in range(1, int(input()) + 1):
     N, E = map(int, input().split())
-    A = [[0] * N + 1 for _ in range(N + 1)]
-    INF = int(1e9)
+    A = [[INF] * (N + 1) for _ in range(N + 1)]
     for i in range(E):
         s, e, w = map(int, input().split())
-
+        A[s][e] = w
+    print(f'#{t_c} {dijkstra(0)}')

@@ -3,22 +3,23 @@ import sys
 sys.stdin = open('1238.txt', 'r')
 
 from collections import deque
-# 그래프 -> bfs탐색
+
+
 def bfs():
-    q = deque([S])
+    max_d = longest_node = 0
+    q = deque([(S, 0)]
     visit = [0] * 101
     visit[S] = 1
     while q:
-        i = q.popleft()
-        for node in graph[i]:
+        v, d = q.popleft()
+        if d >= max_d:
+            max_d = d
+            longest_node = v
+        for node in graph[v]:
             if not visit[node]:
-                visit[node] = visit[i] + 1
-                q.append(node)
-    max_k = 0
-    for k in range(101):
-        if visit[k] >= visit[max_k]:
-            max_k = k
-    return max_k
+                visit[node] = 1
+                q.append((node, d + 1))
+    return longest_node
 
 
 for t_c in range(1, 11):

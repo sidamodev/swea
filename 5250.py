@@ -2,32 +2,34 @@ import sys
 
 sys.stdin = open('5250.txt', 'r')
 
-from collections import deque
+from heapq import heappush, heappop
 
 d_ij = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 
-def bfs():
-    queue = deque([(0, 0, A[0][0])])
-    v[0][0] = 1
-    while queue:
-        i, j, h = queue.popleft()
+def dijkstra():
+    dist = []
+    visited = [[0]*N for _ in range(N)]
+
+    heappush(dist, (0, (0, 0)))  # (w, (i, j))
+
+    while True:
+        w, v = heappop(dist)
+        if visited[v[0]][v[1]]: continue
+
+        visited[v[0]][v[1]] = 1
+
+        if v == (N - 1, N - 1): return w
         for di, dj in d_ij:
-            ni, nj = i + di, j + dj
+            ni, nj = v[0] + di, v[1] + dj
             if 0 <= ni < N and 0 <= nj < N:
-                n_h = A[ni][nj]
-                if n_h > h:
-                    n_cost = v[i][j] + 1 + n_h - h
-                else:
-                    n_cost = v[i][j] + 1
-                if not v[ni][nj] or n_cost < v[ni][nj]:
-                    v[ni][nj] = n_cost
-                    queue.append((ni, nj, n_h))
+                diff = A[ni][nj] - A[v[0]][v[1]]
+                cost = w + 1 + diff if diff > 0 else w + 1
+                heappush(dist, (cost, (ni, nj)))
 
 
 for t_c in range(1, int(input()) + 1):
     N = int(input())
     A = [list(map(int, input().split())) for _ in range(N)]
-    v = [[0] * N for _ in range(N)]
-    bfs()
-    print(f'#{t_c} {v[N - 1][N - 1]-1}')
+    print(f'#{t_c} {dijkstra()}')
+# 데이크서터라
