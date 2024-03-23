@@ -7,12 +7,12 @@ from collections import deque
 
 def bfs():
     max_d = longest_node = 0
-    q = deque([(S, 0)]
+    q = deque([(S, 0)])
     visit = [0] * 101
     visit[S] = 1
     while q:
         v, d = q.popleft()
-        if d >= max_d:
+        if d > max_d or (d == max_d and v > longest_node):
             max_d = d
             longest_node = v
         for node in graph[v]:
