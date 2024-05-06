@@ -14,7 +14,7 @@ def dijkstra():
         chk.add(v)
         for di, dj in d_ij:
             ni, nj = v[0] + di, v[1] + dj
-            if N > ni >= 0 <= nj < N:
+            if N > ni >= 0 <= nj < N and (ni, nj) not in chk:
                 heappush(pq, (w + A[ni][nj], (ni, nj)))
 
 for t_c in range(1, int(input()) + 1):
